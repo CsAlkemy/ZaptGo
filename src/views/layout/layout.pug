@@ -1,0 +1,16 @@
+doctype html
+html(lang='en')
+	include header
+	+header
+	body
+		if __session.userType===0
+			include ../admin/navbar
+		else if  __session.userType===1
+			include ../partner/navbar
+		+navbar
+		.footer-line.ml-3.fixed-bottom
+			br
+			//| &copy; !{new Date().getFullYear()} ;
+			//a(target='__blank' href='https://sites.google.com/view/csalkemy')
+		include footer
+		+footer

@@ -1,0 +1,39 @@
+extends ../../layout/layout
+block topRightContent
+	h3.font-weight-light.text-center Offers
+	a.btn.btn-outline-primary.mr-1(href=makeUrl("/offer/addOffer")) Add Offer
+block content
+
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped
+					thead
+						tr
+							th Offer Name
+							th Promo Code
+							th Percentage
+							th Description
+							th Action
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+					render: function (item) {
+						return item;
+					},
+					targets: 2
+				},
+				],
+				columns: [{data: 'offerName'}, {data: 'code'}, {data: 'percentage'}, {data: 'description'}, {
+					data: 'actions',
+					orderable: false,
+					searchable: false
+				}]
+			});
+			// yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},
+			// 	{column_number: 1, filter_default_label: "Type here..", filter_type: "text"},]);
+
+
+		};

@@ -1,0 +1,19 @@
+mixin footer
+	script(type="text/javascript" src="/js/landing/jquery-3.3.1.min.js")
+	script(type="text/javascript" src="/js/landing/popper.min.js")
+	script(type="text/javascript" src="/js/landing/bootstrap.min.js")
+	script(type="text/javascript" src="/plugins/jquery-validation/jquery.validate.min.js")
+	script(type="text/javascript" src="/js/landing/mdb.min.js")
+	script(type="text/javascript" src="/plugins/moment/min/moment.min.js")
+	script(type="text/javascript").
+		new WOW().init();
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
+	script.
+		$(document).ready(function () {
+			$('.mdb-select').material_select();
+		});
+	each script in __pageScript
+		each js in script.js
+			script(src=js)

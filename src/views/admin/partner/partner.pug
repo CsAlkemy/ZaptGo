@@ -1,0 +1,37 @@
+extends ../../layout/layout
+block topRightContent
+	h3.font-weight-light.text-center Registered Partner
+	a.btn.btn-outline-primary.mr-1(href=makeUrl("/partner/addPartner")) Add Partner
+block content
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped.text-dark
+					thead
+						tr
+							th Partner Name
+							th Company
+							th Email
+							th Phone
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+					render: function (item) {
+						return item;
+					},
+					targets: 2
+				},
+				],
+				columns: [{data: 'name'}, {data: 'company'}, {data: 'email'}, {data: 'phone'}, {
+					//data: 'actions',
+					orderable: false,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},
+				{column_number: 1, filter_default_label: "Type here..", filter_type: "text"},]);
+
+
+		};

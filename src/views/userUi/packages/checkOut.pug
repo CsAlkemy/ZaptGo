@@ -1,0 +1,162 @@
+extends ../../userUi/layout/common
+block content
+	.row.mb-5
+		.col.mb-5
+	.container.mt-5
+		h3.font-weight-light.text-center.mb-5 Confirm Your Bookings
+		.row
+			.col-md-8.mb-3
+				.card
+
+					.card-body
+						.row.mb-2
+							.col-md-5
+								img.card-img.card-img-top.rounded-0(src=package.image ? package.image.path: "/images/nophoto.png" alt="Card image " style="height:300px")
+							.col-md-7
+
+								h3.font-weight-light=package.name
+								h4.font-weight-light !{package.price} ৳
+								.row
+									.col-md-3
+										h3.span.badge.badge-info !{package.day} Days !{package.night} Nights
+									.col-md-3
+										h3.span.badge.badge-info  For !{package.noOfPerson} Person
+									.col
+								h1.badge.badge-info Start From: !{package.startPoint}
+								.row.mb-1.mt-4
+									.col
+										.card
+											.card-body.shadow-none.bg-light
+												.card-text
+													h5.font-weight-light.text-center=moment(package.departure).format('DD MMM, Y')
+											.p.font-weight-light.text-center Departure
+
+									.col
+										.card.mr-lg-3
+											.card-body.shadow-none.bg-light
+												.card-text
+													h5.font-weight-light.text-center=moment(package.return).format('DD MMM, Y')
+											.p.font-weight-light.text-center Return
+			.col-md-4
+				.card
+					.card-header
+						h5.font-weight-light Payment Details:
+					.card-body
+						.row
+							.col-lg-6
+								p Package Charge:
+							.col.text-lg-left
+								p !{package.price} ৳
+						.row
+							.col-lg-6
+								p Discount:
+								-var discount=0
+							.col.text-lg-left
+								p 0.00 ৳
+						hr.mb-2.mt-3
+						.row
+							.col-lg-6
+								h5.font-weight-bold Subtotal:
+							.col.text-lg-left
+								-var subTotal=package.price-discount
+								p !{subTotal} ৳
+
+						.row
+							.col-lg-6
+								p.font-weight-light Service Charge (10%):
+							.col.text-lg-left
+								-var serviceInclue=(package.price*.10)
+								p !{serviceInclue} ৳
+						hr.mb-2.mt-3
+						.row.mb-3
+							.col-lg-6
+								h5.font-weight-bold Total:
+							.col.text-lg-left
+								-var totalPrice=subTotal+serviceInclue;
+								p !{totalPrice} ৳
+						//hr.mb-2.mb-4
+
+
+		.row.mt-5.mb-5
+			.col
+				.card
+					.card-body
+						.row
+							.col
+								h6.font-weight-strong Include:
+								p.font-weight-light=package.include
+							.col
+								h6.font-weight-bold Cancellation Policy :
+								p.font-weight-light=package.cancelPolicy
+						hr.mb-5
+
+						h4.font-weight-bold Please Enter Your Details:
+						form(method="POST"  action=makeUrl = ("/user/package/packageCheckOut/") + package._id+'/'+package.companyID)
+							.row
+								.form-group.col
+									label(for="fullName") Your name
+									input#fullName.form-control(type="text"  name='name' value=__session.user.firstName + " " + __session.user.lastName readonly)
+								.form-group.col
+									label(for='guestName') Traveller Name (*if any)
+									input#guestName.form-control(type="text" name="guest" )
+							.row
+								.form-group.col
+									label(for=phone) Phone
+									input#phone.form-control( type="text"  minlength="11" name="phone" required)
+								.form-group.col
+									label(for=email) Email
+									input#email.form-control( type="email" name="email" required)
+									input.d-none(name='totalPrice' value=totalPrice)
+									input.d-none(name='subtotal' value=subTotal)
+									input.d-none(name='service' value=serviceInclue)
+							.row.mb-3
+								.form-group.col-md-12
+									label(for=address) Address Line
+									textarea#address.form-control( name=address rows="4" )
+							.row.mb-4
+								.col
+									.custom-control.custom-radio
+										input#customRadio1.custom-control-input(type="radio" name="paymentOption" value="offline")
+										label.custom-control-label(for="customRadio1") Pay later
+
+							.row.mb-4
+								.col
+									.custom-control.custom-radio
+										input#customRadio2.custom-control-input(type="radio" name="paymentOption" value="Online")
+										label.custom-control-label(for="customRadio2") Online Payment
+
+							button.btn.btn-blue.waves-effect(type="submit") Payment
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}

@@ -1,0 +1,215 @@
+extends ../../layout/layout
+
+block content
+	.container
+		.card.card-no-border.mb-5
+			.card-header.text-inverse.text-white
+				| Add Package
+			.card-body
+				form(action=makeUrl = "/partner/package/addPackage"  enctype="multipart/form-data" method="POST" )
+					.row
+						.col-md-12
+							h4.border-bottom.border-bottom-info.pb-2 Package Details
+						.col-md-12
+							.form-group
+								label(for="Hotel") Package name
+								input#Hotel.form-control(type="text" name="packageName" required placeholder="Name your Package")
+					.row
+						.col-md-6
+							.form-group
+								label(for="book") Booking Start
+								input#book.form-control(type="text" name="bookStart" autocomplete="off" readonly required)
+						.col-md-6
+							.form-group
+								label(for="end") Booking End
+								input#end.form-control(type="text" name="bookEnd" autocomplete="off" readonly required)
+					.row
+						.col-md-6
+							.form-group
+								label(for="departure") Departure
+								input#departure.form-control(type="text" name="departure" required autocomplete="off" readonly)
+						.form-group.col-md-6
+							label(for="return") Return
+							input#return.form-control(type="text" name="returnDate" required autocomplete="off" readonly)
+					.form-row
+						.col-md-6
+							.form-group
+								label(for="for") For (Number of person)
+								input#for.form-control(type="number" name="person" required placeholder=" No. Of Person")
+						.col-md-3
+							.form-group
+								label(for="day") Day
+								input#day.form-control(type="number" name="day" required placeholder="How many Days" readonly)
+						.form-group.col-md-3
+							label(for="night") Night
+							input#night.form-control(type="number" name="night" required placeholder= "How many night" readonly)
+					.row
+						.col-md-12
+							.form-group
+								label(for="start") Starting point
+								input#start.form-control(type="text" name="start"  placeholder="Starting Point" required)
+					.row
+						.col-md-12
+							.form-group
+								label(for="Overview") Overview
+								textarea#Overview.form-control( name="overview" rows="4" required )
+
+					.row
+						.col-md-12
+							h4.border-bottom.border-bottom-info.pb-2 Package Policy
+					.row
+						.col-md-12
+							h4.border-bottom.border-gray.pb-2 Package includes
+							p Mention what are the facilities you are offering. Click on the '+' to add more facilities
+
+
+					.row#repeater
+
+					.row
+						.col-md-12.pt-4.pb-5
+							.btn-group
+								button.btn.btn-danger.btn-sm#reduce(type="button")
+									i.fa.fa-minus
+								button.btn.btn-success.btn-sm#addMore(type="button")
+									i.fa.fa-plus
+
+					.row
+						.col-md-12
+							h5 Other Policy
+							p.font-weight-lighter.border-bottom.border-gray.pb-2 *** Here in "Cancellation Policy" Enter the terms how your customer can cancel any pre-booked packages. *** And enter what are the places to be covered using comma (,) e.g- Nilgiri, Nilachol..
+					.row
+						.col-md-6
+							.form-group
+								label(for="cancel") Cancellation Policy
+								textarea#cancel.form-control( name="cancelPolicy" rows="4")
+						.col-md-6
+							.form-group
+								label(for="places") Places to be covered (Write in details)
+								textarea#places.form-control( name="places" rows="4" required)
+					.row
+						.col-md-12
+							h4.border-bottom.border-bottom-info.pb-2 Package Description And Pricing
+						.col-md-12
+							h4.border-bottom.border-gray.pb-2 Pricing
+					.row
+						.col-md-6
+							.form-group
+								label(for="price") Price
+								input#price.form-control( name="price" required)
+						.col-md-6
+							.form-group
+								label(for="priceKids") Price for Extra Baby
+								input#priceKids.form-control( name="priceKids")
+						.col-md-12
+							h4.border-bottom.border-gray.pb-2 Description
+
+					.row
+						.col-md-6
+							.form-group
+								label(for="possible") Possible Description of Travel
+								p.font-weight-lighter Day wise description will be recommended
+								textarea#possible.form-control( name="possibleDescription" rows="4")
+						.col-md-6
+							.form-group
+								label(for="food") Food menu
+								p.font-weight-lighter Day wise food menu will be recommended
+								textarea#food.form-control( name="food" rows="4" required)
+					.row
+						.col-md-12
+							.form-group
+								label(for="cancel") Package Description
+								p.font-weight-lighter Details overview of package (optional)
+								textarea#des.form-control( name="packageDescription" rows="4")
+						.col-md-12
+							h4.border-bottom.border-gray.pb-2 Images
+					.row
+						.col-md-6
+							h5.font-weight-lighter.border-bottom.border-gray.pb-2 Add Image (package Cover)
+							.form-group.pt-5.pb-5
+								input#image.form-control-file(name="image" type="file")
+						.col-md-6
+							h5.font-weight-lighter.border-bottom.border-gray.pb-2 Image preview:
+							img#preview.img-responsive.border-dark(alt="Image" height=150 src="/images/noimage.png")
+					.col-md-12.pt-2
+						button.btn.btn-primary.align-content-center(type="submit") Submit
+
+
+	script.
+		window.onload = function () {
+
+			var counter = 1;
+			$(document).on('click', '#addMore', function () {
+				let html = '<div class="col-md-6" id="package' + counter + '">' +
+					'<div class="form-group">' +
+					'<label>Include ' + counter + '</label>' +
+					'<input class="form-control" name="include[]" type="text">' +
+					'</div>' +
+					'</div>'
+				$("#repeater").append(html);
+				counter++;
+			});
+			$(document).on('click', '#reduce', function () {
+				if (counter > 1) {
+					counter--;
+					$("#package" + counter).remove();
+				}
+			});
+
+			var $bookStart = $('[name="bookStart"]').daterangepicker().val('');
+			$bookStart.on("apply.daterangepicker", function (evt) {
+				var $bookEnd = $('[name="bookEnd"]').daterangepicker({
+					minDate: moment($(this).val(), 'DD MMM, YYYY').toDate(),
+				});
+				$bookEnd.val('');
+
+				$bookEnd.on("apply.daterangepicker", function (evt) {
+					var $departure = $('[name="departure"]').daterangepicker({
+						timePicker: true,
+						minDate: moment($(this).val(), 'DD MMM, YYYY').toDate(),
+						locale: {format: 'DD MMM, YYYY hh:mm A'}
+					});
+					$departure.val('');
+
+					$departure.on("apply.daterangepicker", function (evt) {
+						var $returnDate = $('[name="returnDate"]').daterangepicker({
+							timePicker: true,
+							minDate: moment($(this).val(), 'DD MMM, YYYY').toDate(),
+							locale: {format: 'DD MMM, YYYY hh:mm A'}
+						})
+						$returnDate.val('');
+						$returnDate.on("apply.daterangepicker", function (evt) {
+							calculateDayNight($departure, $returnDate);
+						})
+						calculateDayNight($departure, $returnDate);
+					})
+				});
+			});
+
+
+			document.getElementById("image").onchange = function () {
+				let reader = new FileReader();
+				reader.onload = function (e) {
+					document.getElementById("preview").src = e.target.result;
+				};
+				reader.readAsDataURL(this.files[0]);
+			};
+
+
+		}
+
+		function calculateDayNight($departure, $returnDate) {
+
+			let diff = Math.abs(moment($departure.val(), 'DD MMM, YYYY hh:mm A').diff(moment($returnDate.val(), 'DD MMM, YYYY hh:mm A'), 'days'));
+			let noOfDay = diff;
+			let noOfNight = diff;
+			if (Number(moment($departure.val(), 'DD MMM, YYYY hh:mm A').format('HH')) >= 18) {
+				noOfNight = diff + 1;
+			}
+			if (Number(moment($returnDate.val(), 'DD MMM, YYYY hh:mm A').format('HH')) < 18 && Number(moment($returnDate.val(), 'DD MMM, YYYY hh:mm A').format('HH')) >= 6) {
+				noOfDay = diff + 1;
+			}
+			$('#day').val(noOfDay)
+			$('#night').val(noOfNight)
+			console.log(noOfNight, noOfDay);
+
+		}

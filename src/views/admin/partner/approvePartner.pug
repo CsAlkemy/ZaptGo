@@ -1,0 +1,30 @@
+extends ../../layout/layout
+block topRightContent
+block content
+	.container.text-dark
+		.card.card-no-border.mb-5
+			.card-header.text-inverse.text-white
+				| Approve Partner
+			.card-body
+				form(method="POST"  action=makeUrl("/partner/partnerApprove/")+partner._id)
+					.form-row
+						.form-group.col-md-6
+							label(for="name") Partner Name
+							input#name.form-control(type="text" name="name" value=partner.name disabled required placeholder="Partner Name")
+
+						.form-group.col-md-6
+							label(for="company") Company Name
+							input#company.form-control(type="text" name="company" value=partner.company disabled placeholder="Company Name")
+					.form-row
+						.form-group.col-md-6
+							label(for="email") Email
+							input#email.form-control(type="email" name="email" value=partner.email disabled required placeholder="Email" autocomplete="off")
+						.form-group.col-md-6
+							label(for="phone") Phone
+							input#phone.form-control(type="phone" name="phone" value=partner.phone disabled placeholder="Phone" required)
+					.form-row
+						.form-group.col-md-12
+							label(for="pass") Password
+							input#pass.form-control(type="password" name="password" required placeholder="Password")
+
+					button.btn.btn-primary(type="submit") Submit

@@ -1,0 +1,12 @@
+doctype html
+html(lang='en')
+	include header
+	+header
+	body
+		if __session.userType ===2
+			include ../pages/navbar
+		+navbar
+		.footer-line.ml-3.fixed-bottom
+			br
+		include footer
+		+footer

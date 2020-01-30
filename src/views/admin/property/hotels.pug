@@ -1,0 +1,62 @@
+extends ../../layout/layout
+block topRightContent
+	h3.font-weight-light.text-center.mb-3.text-dark Hotel List
+	a.btn.btn-outline-primary.mr-1(href=makeUrl("/property/packages")) Packages
+block content
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped.text-dark
+					thead
+						tr
+							th Hotel Name
+							th Phone
+							th Address
+							th City
+							th Country
+							th Star
+							th Total Room
+							th image
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+					render: function (item) {
+						if (item) {
+							return '<img src="' + item.path + '" alt="' + item.originalName + '" height="48px" width="55px">'
+						} else {
+							return '<img src="/images/noimage.png" class="thumb-sm" height="48px" width="55px">'
+						}
+					},
+					targets: 7
+				},{
+					render: function (item) {
+						console.log(item);
+						if (item === '5') {
+							return "<span class=\"badge badge-success\">5*****</span>"
+						} else if (item === '4') {
+							return "<span class=\"badge badge-success\">4****</span>"
+						} else if (item === '3') {
+							return "<span class=\"badge badge-success\">3***</span>"
+						} else if (item === '2') {
+							return "<span class=\"badge badge-success\">2**</span>"
+						} else {
+							return "<span class=\"badge badge-success\"> 1*</span>"
+						}
+
+					},
+					targets: 5
+				}
+				],
+				columns: [{data: 'name'}, {data: 'phone'}, {data: 'address'}, {data: 'city'}, {data: 'country'}, {data: 'star'}, {data: 'noOfRoom'}, {data: 'image'}, {
+					data: 'actions',
+					orderable: false,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},
+				{column_number: 1, filter_default_label: "Type here..", filter_type: "text"},]);
+
+
+		};

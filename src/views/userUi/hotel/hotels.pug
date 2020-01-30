@@ -1,0 +1,62 @@
+extends ../../userUi/layout/common
+block content
+	.container.mt-5
+		.row.mb-5
+			.col
+		h2.font-weight-light.text-center.mb-5 Available Hotels
+		each hotel in hotels
+			.card.mb-4(id=hotel._id)
+				.card-body.py-2
+				.row.mb-2
+					.col-md-4
+						img.card-img.mb-5(src=hotel.image?hotel.image.path:"/img/svg/undraw_contact_us_15o2.svg" alt="Card image cap" style="height:200px")
+					.col-md-8
+						h3.font-weight-light=hotel.name
+						p.font-weight-light Address: !{hotel.AddressFull}
+						-var start = 1
+							while start <= hotel.star
+								-let a = start++
+								i.fas.fa-star(style="color:#03A9F4")
+						p.font-weight-light Features : !{hotel.feature}
+						br
+						a.button.btn-sm.btn-outline-primary.btn-rounded.waves-effect(type="button" href=makeUrl("/hotel/hotelPreview/")+hotel._id) Choose Room
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+
+	script.
+		function hotels(count) {
+			if ($(count===0)){
+				console.log(count);
+			}
+		}

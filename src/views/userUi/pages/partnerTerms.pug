@@ -1,0 +1,84 @@
+extends ../../userUi/layout/common
+block content
+	.row
+		.col.mt-5
+	.container.mt-5
+		h3.text-center.font-weight-light.mt-5 Welcome to Tourgo Partner!
+		p.text-center Platform for partner companies to expend their business with Tougro.
+		.row.mt-5
+			.col
+				.card
+					img(src="/images/steps.png" style="height:280px")
+		.row.mt-5
+			.col-md-7.mt-5.mb-5
+				h4.font-weight-light.mb-4.text-center Partner Registration
+				form(action=makeUrl = "/user/partnerTerms" method="POST" novalidate )
+					.form-group
+						label(for="name") Owner Name
+						input#name.form-control(type="text" name="name" required)
+					.form-group
+						label(for="company") Company Name
+						input#company.form-control(type="text" name="company" required)
+					.row
+						.form-group.col-md-4
+							select.mdb-select.md-form.ml-3(name="property" required)
+								option(value="" disabled="" selected="") Property Type
+								option(value="Hotels") Hotel
+								option(value="Tour Packages") Tour Package
+								option(value="Car Rental") Car Rental
+						.form-group.col-md-4
+							label(for="contact") Contact Number
+							input#contact.form-control(type="text" name="phone" required)
+						.form-group.col-md-4
+							label(for="email") Email
+							input#email.form-control(type="email" name="email" required)
+					.form-group
+						label(for="description") Description of your Business
+						textarea#description.form-control(rows="4" name="description" )
+					button.btn.btn-primary.mb-5(type="submit") Register
+			.col.mt-5
+				.card.mt-5.shadow-none
+					.card-body
+						h4.mt-5.font-weight-light.ml-4
+							| Important!
+						p.font-weight-light
+						ul
+							li Register here
+							li Get your valid property document ready.
+							li We will contact you
+
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+

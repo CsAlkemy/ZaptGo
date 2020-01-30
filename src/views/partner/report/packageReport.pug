@@ -1,0 +1,26 @@
+extends ../../layout/layout
+block topRightContent
+	.col-md-10
+		h3.text-center.font-weight-light Package Booking Report
+
+block content
+	.row
+		.col
+		.col-md-8
+			.card
+				.card-body
+					#calendar
+		.col
+
+	script.
+		window.onload = function () {
+			document.addEventListener('DOMContentLoaded', function () {
+				var calendarEl = document.getElementById('calendar');
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					plugins: ['dayGrid'],
+					isTodayEnabled:true,
+				});
+				calendar.render();
+			});
+		}
+

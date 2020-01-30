@@ -1,0 +1,24 @@
+extends ../../layout/layout
+block content
+	.container.text-dark
+		.row
+			.col-11
+				.card
+					.card-body
+						.row
+							.col-12.col-lg-8.col-md-6
+								h3.mb-0.text-truncated !{profile.name}
+								p.lead  Designation: Admin
+								p
+									| Address: !{profile.address}
+
+								h5.font-weight-light
+									span.badge.badge-info.tags Email : !{profile.email}
+								h5.font-weight-light
+									span.badge.badge-info.tags Phone: !{profile.phone}
+								a.button.btn.btn-success.rounded-0.px-5.mt-2(href=makeUrl("/editProfile/") + __session.user._id) Edit
+							.col-12.col-lg-4.col-md-6.text-center
+								img.mx-auto.rounded-circle.img-fluid(src=(profile.image?profile.image.path:"/images/images.jpg") alt="" style="height:300px")
+
+
+

@@ -1,0 +1,33 @@
+extends ../../layout/layout
+
+block content
+	each hotel in hotels
+		.container
+			.row
+				.col-12
+					.card(id=hotel._id)
+						.card-header.row.bg-light
+							.col
+								.card-title=hotel.name
+							.col-auto
+								button.btn-sm.btn.btn-warning(data-toggle="collapse" data-target="#"+hotel._id aria-expanded="true" aria-controls=hotel._id)
+									i.fa.fa-minus
+						.card-body.row.show.collapse
+							each room in hotel.rooms
+								-console.log(room);
+								.col-md-4.col-lg-3.col-12.pb-4
+									.card.h-100
+										img.card-img-top(src=room.image?room.image.path:"/images/images.jpg" alt="Card image cap")
+										.card-body
+											h5.card-title=room.name
+											p.card-text=room.includes
+											p.card-text
+												small.text-muted Last updated 3 mins ago
+										.card-footer
+											.row
+												.col-md-6.text-center
+													button.btn.btn-outline-dark.btn-sm(type="button")
+														span.fas.fa-eye
+												.col-md-6.text-center
+													button.btn.btn-outline-dark.btn-sm(type="button")
+														span.far.fa-edit

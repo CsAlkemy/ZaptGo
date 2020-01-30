@@ -1,0 +1,55 @@
+extends ../../layout/layout
+block topRightContent
+	h3.font-weight-light.text-center.mb-3.text-dark Package List
+	a.btn.btn-outline-primary.mr-1(href=makeUrl("/property/hotels")) Hotel list
+block content
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped.text-dark
+					thead
+						tr
+							th Package Name
+							th Booking Deadline
+							th Departure
+							th Return
+							th No of Person
+							th Places
+							th Price
+							th Description
+							th Status
+							th Actions
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+					render: function (item) {
+						return moment(item).format('DD MMM, Y');
+					},
+					targets:[1,2,3]
+
+				},{
+					render:function (item) {
+						console.log(item);
+						if(item){
+							return "<span class=\"badge badge-success\">Running</span>"
+						}
+						else {
+							return "<span class=\"badge badge-danger\"> Not Running</span>"
+						}
+
+					},
+					targets: 8
+
+				}
+				],
+
+				columns: [{data: 'name'}, {data: 'bookEnd'}, {data: 'departure'}, {data: 'return'}, {data: 'noOfPerson'}, {data: 'places'},  {data: 'price'}, {data: 'overview'},{data: 'status'}, {
+					data: 'actions',
+					orderable: false,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"}]);
+		};

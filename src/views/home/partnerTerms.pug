@@ -1,0 +1,99 @@
+extends ../home/layout/common
+block content
+	.row
+		.col.mt-5
+	.container.mt-5
+		h3.text-center.font-weight-light.mt-5 Welcome to Tourgo Partner!
+		p.text-center Platform for partner companies to expend their business with Tougro.
+		.row.mt-5
+			.col
+				.card
+					img(src="/images/steps.png" style="height:280px")
+		.row.mt-5
+			.col-md-7.mt-5.mb-5
+				h2.font-weight-light.text-center Partner Registration
+				hr.mb-5
+				form.text-left(action=("/partnerTerms") method="POST"  )
+					.form-group
+						label.text-left(for="name") Owner Name
+						input#name.form-control(type="text" name="name" required)
+					.form-group
+						label(for="company") Company Name
+						input#company.form-control(type="text" name="company" required)
+					.row
+						.form-group.col-md-4
+							select.mdb-select.md-form.ml-3(name="property" required)
+								option(value="" disabled="" selected="") Property Type
+								option(value="Hotels") Hotel
+								option(value="Tour Packages") Tour Package
+								option(value="Car Rental") Car Rental
+						.form-group.col-md-4
+							label(for="contact") Contact Number
+							input#contact.form-control(type="tel" name="phone" min="11" max="11" required)
+						.form-group.col-md-4
+							label(for="email") Email
+							input#email.form-control(type="email" name="email" required)
+					.form-group
+						label(for="description") Description of your Business
+						textarea#description.form-control(rows="4" name="description" )
+					button.btn.btn-primary.mb-5#Alart(type="submit" data-toggle="modal" data-target="#basicExampleModal") Register
+			.col.mt-5.text-dark.text-left
+				.card.mt-5.shadow-none
+					.card-body
+						h4.mt-5.font-weight-light.ml-4
+							| Important!
+						p.font-weight-light
+						ul
+							li Register here
+							li Get your valid property document ready.
+							li We will contact you
+
+	.container
+		// Modal
+		#basicExampleModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+			.modal-dialog.modal-notify.modal-primary(role="document")
+				.modal-content
+					.modal-header
+						h5.heading.lead Partner Request Sent
+						button.close(type="button" data-dismiss="modal" aria-label="Close")
+							span.white-text(aria-hidden="true") ×
+					.modal-body
+						.text-center
+							i.fas.fa-check.fa-4x.mb-3.animated.rotateIn
+							p Thank you for your Partner Request. We will get back to you soon!
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/hotels") Hotels
+						br
+						a(href="/packages") Packages
+						br
+						a(href="/blog") Blog
+						br
+						a(href="/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/login") Partner login
+						br
+						a(href="/partnerTerms") Register with hotels
+						br
+						a(href="/partnerTerms") Register with services
+
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+

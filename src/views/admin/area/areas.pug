@@ -1,0 +1,40 @@
+extends ../../layout/layout
+block topRightContent
+	h3.font-weight-light.text-center Covered Area
+	a.btn.btn-outline-primary.mr-1(href=makeUrl("/addArea")) Add new Area
+block content
+	.card.text-dark
+		.card-body
+			.table-responsive
+				table#table.table.table-striped.text-dark
+					thead
+						tr
+							th Location
+							th Image
+							th Action
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+					render: function (item) {
+						if (item) {
+							return '<img src="' + item.path + '" alt="' + item.originalName + '" height="48px" width="48px">'
+						} else {
+							return '<img src="/images/noimage.png" class="thumb-sm" height="48px" width="60px">'
+						}
+					},
+					targets: 1
+				},
+				],
+				columns: [{data: 'name'}, {data: 'image'}, {
+					data: 'actions',
+					orderable: false,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},]);
+			// 	{column_number: 1, filter_default_label: "Type here..", filter_type: "text"},]);
+
+
+		};

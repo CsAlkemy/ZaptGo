@@ -1,0 +1,49 @@
+extends ../../layout/layout
+block content
+	.container
+		.row
+			.col
+			.card.col-md-6.shadow-1.rounded-0.mb-5
+				.card-body
+					h3.font-weight-light.text-center Edit Company Profile
+					hr.mb-5
+					form(action=makeUrl('/dashboard/editProfile/')+partner._id  method="POST" enctype="multipart/form-data" novalidate)
+						.form-group
+							label(for="partnerName") Owner Name
+							input#partnerName.form-control(type="text" name="name" value=partner.name required)
+						.form-group
+							label(for="partnerCompany") Company Name
+							input#partnerCompany.form-control(type="text" name="company" value=partner.company required)
+						.row
+							.form-group.col-md-6
+								label(for="email") Email
+								input#email.form-control(type="email" name="email" value=partner.email required)
+							.form-group.col-md-6
+								label(for="phone") Phone
+								input#phone.form-control(type="text" name="phone" value=partner.phone required)
+
+						.form-group
+							label(for="address") Property Address
+							textarea#address.form-control(rows="5" name="address" required) !{partner.address}
+						.row.mt-5
+							.col-md-6
+								h5.font-weight-lighter.border-bottom.border-gray.pb-2 Add Image
+								.form-group.pt-5.pb-5
+									input#image.form-control-file(name="image" type="file")
+							.col-md-6
+								h5.font-weight-lighter.border-bottom.border-gray.pb-2 Image preview:
+								img#preview.img-responsive.border-dark(alt="Image" height=150 src="/images/noimage.png")
+						button.btn.btn-success.rounded-0.mt-4(type="submit") Submit
+
+
+			.col
+	script.
+		window.onload=function () {
+			document.getElementById("image").onchange = function () {
+				let reader = new FileReader();
+				reader.onload = function (e) {
+					document.getElementById("preview").src = e.target.result;
+				};
+				reader.readAsDataURL(this.files[0]);
+			};
+		}

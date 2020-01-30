@@ -1,0 +1,58 @@
+extends ../../layout/layout
+block content
+	h3.font-weight-light.text-center.mb-3 Added Hotel's
+	each hotel in hotels
+		.container.mt-5
+			.card.text-dark(id=hotel._id)
+				.card-body
+				.row.mb-2
+					.col-md-7
+						img.card-img.card-img-top.rounded-0(src=hotel.image?hotel.image.path:"/images/nophoto.png" alt="Card image " style="height:450px")
+					.col-md-5
+						h3.font-weight-light=hotel.name
+						h5.font-weight-light Address: !{hotel.address}
+						h5.font-weight-light !{hotel.star} Star
+						h5.font-weight-light.span.badge.badge-info.mb-2 Totel Room !{hotel.noOfRoom}
+						p.font-weight-bold Overview:
+						p.font-weight-light !{hotel.about}
+						.row
+							.col-md-6
+								.card
+									.card-body.shadow-none.bg-light
+										.card-text
+											h3.font-weight-light.text-center=hotel.checkIn
+									.p.font-weight-light.text-center Check In
+
+							.col-md-6
+								.card.mr-lg-3
+									.card-body.shadow-none.bg-light
+										.card-text
+											h3.font-weight-light.text-center=hotel.checkOut
+									.p.font-weight-light.text-center Check Out
+						hr.mt-3
+						a.button.btn.btn-danger.text-white.btn-sm.rounded.mt-0.mb-0#confirmAppointment(type="button" onclick="confirmDelete(`"+makeUrl('/hotel/deleteHotel/')+hotel._id+"`)")
+							i.fa.fa-trash
+
+			each room in hotel.rooms
+				.container
+					.card.mt-5.mb-2
+						.card-body.py-0
+						.row
+							.col-md-4
+								img.card-img.card-img-top.img-thumbnail.rounded-0.text-center(src=room.image?room.image.path:"/images/nophoto.png" alt="Card image cap" style="height:300px")
+							.col-md-8.mt-2
+								h3.font-weight-light=room.name
+								h5.font-weight-strong Price: !{room.price} per Night
+								p.font-weight-light For  !{room.capacityAdult} Person
+								h6.font-weight-light=room.smokingPolicy
+								p.font-weight-light Amenities: !{room.amenities}
+								hr.mt-3
+								a.button.btn.btn-danger.btn-sm.text-white.rounded.mt-0.mb-0(type="button" onclick="confirmDelete(`"+makeUrl('/hotel/deleteRoom/')+hotel._id+'/'+room._id+"`)")
+									i.fa.fa-trash
+
+	script.
+		function confirmDelete(url) {
+			if(confirm("are you sure?")){
+				open(url,'_self')
+			}
+		}

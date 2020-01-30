@@ -1,0 +1,195 @@
+mixin navbar
+	.content
+	#wrapper
+		// Sidebar
+		ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
+			// Sidebar - Brand
+			a.sidebar-brand.d-flex.align-items-center.justify-content-center(href="/admin/dashboard")
+				.sidebar-brand-icon.rotate-n-15
+					i.fab.fa-telegram-plane
+				.sidebar-brand-text.mx-4
+					| Tourgo
+			// Divider
+			hr.sidebar-divider.my-0
+			// Nav Item - Dashboard
+			li.nav-item
+				a.nav-link(href="/partner/dashboard")
+					i.fas.fa-bullseye
+					span Dashboard
+			// Divider
+			hr.sidebar-divider
+			// Heading
+			.sidebar-heading
+			// Heading
+			.sidebar-heading
+				|
+			// Nav Item - Pages Collapse Menu
+			li.nav-item
+				a.nav-link.collapsed(href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages")
+					i.fas.fa-suitcase
+					span Property
+				#collapsePages.collapse(aria-labelledby="headingPages" data-parent="#accordionSidebar")
+					.bg-white.py-2.collapse-inner.rounded
+						h6.collapse-header Hotels:
+						a.collapse-item(href="/partner/hotel/addHotel") Add Hotels
+						a.collapse-item(href="/partner/hotel/addRoom") Add Rooms
+						a.collapse-item(href="/partner/hotel/rooms") Hotels
+						.collapse-divider
+						h6.collapse-header Tour Packages:
+						a.collapse-item(href="/partner/package/addPackage") Add Packages
+						a.collapse-item(href="/partner/package/viewPackage") Packages
+
+			li.nav-item
+				a.nav-link.collapsed(href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages")
+					i.fab.fa-buffer
+					span Bookings
+				#collapsePages2.collapse(aria-labelledby="headingPages" data-parent="#accordionSidebar")
+					.bg-white.py-2.collapse-inner.rounded
+						a.collapse-item(href="/partner/booking/hotelBookings") Hotel Bookings
+						.collapse-divider
+						a.collapse-item(href="/partner/booking/packageBookings") Package Bookings
+			//li.nav-item
+			//	a.nav-link.collapsed(href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapsePages")
+			//		i.fas.fa-chart-bar
+			//		span Report
+			//	#collapseReport.collapse(aria-labelledby="headingPages" data-parent="#accordionSidebar")
+			//		.bg-white.py-2.collapse-inner.rounded
+			//			a.collapse-item(href="/partner/report/hotelBooking") Hotel Booking Report
+			//			.collapse-divider
+			//			a.collapse-item(href="/partner/report/packageBooking") Package Booking Report
+
+			li.nav-item
+				a.nav-link(href="/partner/dashboard/profile/" + __session.user._id)
+					i.fas.fa-id-badge
+					span Profile
+			// Divider
+			hr.sidebar-divider.d-none.d-md-block
+			// Sidebar Toggler (Sidebar)
+			.text-center.d-none.d-md-inline
+				button#sidebarToggle.rounded-circle.border-0
+		// End of Sidebar
+		// Content Wrapper
+		#content-wrapper.d-flex.flex-column
+			// Main Content
+			#content
+				// Topbar
+				nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
+					// Sidebar Toggle (Topbar)
+					button#sidebarToggleTop.btn.btn-link.d-md-none.rounded-circle.mr-3
+						i.fa.fa-bars
+					// Topbar Navbar
+					ul.navbar-nav.ml-auto
+						// Nav Item - Search Dropdown (Visible Only XS)
+						li.nav-item.dropdown.no-arrow.d-sm-none
+							a#searchDropdown.nav-link.dropdown-toggle(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+								i.fas.fa-search.fa-fw
+							// Dropdown - Messages
+							.dropdown-menu.dropdown-menu-right.p-3.shadow.animated--grow-in(aria-labelledby="searchDropdown")
+								form.form-inline.mr-auto.w-100.navbar-search
+									.input-group
+										input.form-control.bg-light.border-0.small(type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2")
+										.input-group-append
+											button.btn.btn-primary(type="button")
+												i.fas.fa-search.fa-sm
+						// Nav Item - Alerts
+						li.nav-item.dropdown.no-arrow.mx-1
+							a#alertsDropdown.nav-link.dropdown-toggle(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+								//i.fas.fa-bell.fa-fw  *********************************************enable if want to make icon visible
+								// Counter - Alerts
+								//span.badge.badge-danger.badge-counter 3+  *********************************************enable if want to make badge visible
+							// Dropdown - Alerts
+							.dropdown-list.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="alertsDropdown")
+								h6.dropdown-header
+									| Alerts Center
+								a.dropdown-item.d-flex.align-items-center(href="#")
+									.mr-3
+										.icon-circle.bg-primary
+											i.fas.fa-file-alt.text-white
+									div
+										.small.text-gray-500 December 12, 2019
+										span.font-weight-bold A new monthly report is ready to download!
+								a.dropdown-item.d-flex.align-items-center(href="#")
+									.mr-3
+										.icon-circle.bg-success
+											i.fas.fa-donate.text-white
+									div
+										.small.text-gray-500 December 7, 2019
+										|                     $290.29 has been deposited into your account!
+								a.dropdown-item.d-flex.align-items-center(href="#")
+									.mr-3
+										.icon-circle.bg-warning
+											i.fas.fa-exclamation-triangle.text-white
+									div
+										.small.text-gray-500 December 2, 2019
+										|                     Spending Alert: We've noticed unusually high spending for your account.
+								a.dropdown-item.text-center.small.text-gray-500(href="#") Show All Alerts
+						// Nav Item - Messages
+						li.nav-item.dropdown.no-arrow.mx-1
+							a#messagesDropdown.nav-link.dropdown-toggle(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+								//i.fas.fa-envelope.fa-fw ***************************************************enable if want to make icon visible
+								// Counter - Messages
+								//span.badge.badge-danger.badge-counter 7 ***************************************************enable if want to make badge visible
+							// Dropdown - Messages
+							.dropdown-list.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="messagesDropdown")
+								h6.dropdown-header
+									| Message Center
+								a.dropdown-item.d-flex.align-items-center(href="#")
+									.dropdown-list-image.mr-3
+										img.rounded-circle(src="#" alt="")
+										.status-indicator.bg-success
+									.font-weight-bold
+										.text-truncate Hi there! I am wondering if you can help me with a problem I've been having.
+										.small.text-gray-500 Emily Fowler · 58m
+								a.dropdown-item.d-flex.align-items-center(href="#")
+									.dropdown-list-image.mr-3
+										img.rounded-circle(src="#" alt="")
+										.status-indicator
+									div
+										.text-truncate
+											| I have the photos that you ordered last month, how would you like them sent to you?
+										.small.text-gray-500 Jae Chun · 1d
+								a.dropdown-item.d-flex.align-items-center(href="#")
+									.dropdown-list-image.mr-3
+										img.rounded-circle(src="#" alt="")
+										.status-indicator.bg-warning
+									div
+										.text-truncate
+											| Last month's report looks great, I am very happy with the progress so far, keep up the good work!
+										.small.text-gray-500 Morgan Alvarez · 2d
+								a.dropdown-item.d-flex.align-items-center(href="#")
+									.dropdown-list-image.mr-3
+										img.rounded-circle(src="#" alt="")
+										.status-indicator.bg-success
+									div
+										.text-truncate
+											| Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...
+										.small.text-gray-500 Chicken the Dog · 2w
+								a.dropdown-item.text-center.small.text-gray-500(href="#") Read More Messages
+						.topbar-divider.d-none.d-sm-block
+						// Nav Item - User Information
+						li.nav-item.dropdown.no-arrow
+							a#userDropdown.nav-link.dropdown-toggle(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+								span.mr-2.d-none.d-lg-inline.text-dark.small !{__session.user.name}
+								img.img-profile.rounded-circle(src=(__session.user.image?__session.user.image.path:'/images/user.png'))
+							// Dropdown - User Information
+							.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="userDropdown")
+								a.dropdown-item(href="/partner/dashboard/profile/"+__session.user._id)
+									i.fas.fa-user.fa-sm.fa-fw.mr-2.text-dark
+									|                   Profile
+								a.dropdown-item(href="/partner/dashboard/changePassword/" + __session.user._id)
+									i.fas.fa-key.fa-sm.fa-fw.mr-2.text-dark
+									|                   Change Password
+								.dropdown-divider
+								a.dropdown-item(href="/logout")
+									i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-dark
+									|                   Logout
+				.container-fluid
+					.d-sm-flex.align-items-center.justify-content-between.mb-4
+						h1.h3.mb-0.text-dark
+
+					block content
+			// Footer
+			footer.sticky-footer.bg-white.py-4
+				.container.my-auto
+					.copyright.text-center.my-auto
+						span Copyright © By Tourgo !{new Date().getFullYear()}

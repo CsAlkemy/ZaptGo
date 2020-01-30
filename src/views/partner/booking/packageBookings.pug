@@ -1,0 +1,46 @@
+extends ../../layout/layout
+block topRightContent
+block content
+	h3.font-weight-light.text-center.mb-3 Package Bookings
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped
+					thead
+						tr
+							th Guest
+							th Email
+							th Phone
+							th Package Name
+							th Price
+							th Payment Status
+
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+					render: function (item) {
+						if (item == null) {
+							return "<span class=\"badge badge-danger\">Not Paid</span>"
+						} else {
+							return "<span class=\"badge badge-success\">Paid</span>"
+						}
+
+					},
+					targets: 5
+
+				}
+
+				],
+				columns: [{data: 'guestName'}, {data: 'email'}, {data: 'phone'}, {data: 'packageName'}, {data: 'subtotal'}, {data: 'transactionID'}, {
+					//data: 'actions',
+					orderable: false,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},
+				{column_number: 1, filter_default_label: "Type here..", filter_type: "text"},]);
+
+
+		};

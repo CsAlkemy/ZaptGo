@@ -1,0 +1,109 @@
+extends ../layout/common
+block content
+		.row.mb-5
+			.col.mb-5
+		.container.mt-5
+			.card
+				.card-body
+				.row.mb-2
+					.col-md-5
+						img.card-img.card-img-top.rounded-0(src=package.image ? package.image.path : "/images/nophoto.png" alt="Card image " style="height:300px")
+					.col-md-7
+						h3.font-weight-light=package.name
+						h4.font-weight-light !{package.price} BDT
+						.row
+							.col-md-2
+								h3.span.badge.badge-info !{package.day} Days !{package.night} Nights
+							.col-md-2
+								h3.span.badge.badge-info  For !{package.noOfPerson} Person
+							.col-md-7
+						h1.badge.badge-info Includes :
+						p=package.include
+						p.font-weight-light Overview: !{package.overview}
+						.row.mb-2
+							.col
+								.card
+									.card-body.shadow-none.bg-light
+										.card-text
+											h3.font-weight-light.text-center=moment(package.departure).format('DD MMM, Y')
+									.p.font-weight-light.text-center Departure
+
+							.col
+								.card.mr-lg-3
+									.card-body.shadow-none.bg-light
+										.card-text
+											h3.font-weight-light.text-center=moment(package.return).format('DD MMM, Y')
+									.p.font-weight-light.text-center Return
+						p.font-weight-light * We Will start Our Journey from "!{package.startPoint}"
+
+						a.button.btn.btn-blue.waves-effect(type="button" href=makeUrl("/package/checkOut/") + package._id) Book Now
+						//.row
+						//	.col.mb-4
+						//		p.font-weight-light.text-danger *Enter number of room
+						//		form.row(method="POST" novalidate action=makeUrl = ("/user/package/checkOut/") + package._id ) Buy Now
+						//			.row
+						//				.col
+						//					.form-group
+						//						input#roomNumber.form-control(type="number" name="room" min="1" value="1" placeholder="no. of room" required)
+						//				.col
+						//					button.btn.btn-blue.waves-effect(type="submit") Book Now
+
+
+
+		.container.mb-2
+			.card.mt-5.mb-2
+				.card-body
+				.row.ml-4.mb-4
+					.col-md-6
+						h5.font-weight-strong Places Will be Covered:
+						p.font-weight-strong=package.places
+					.col-md-6
+						h5.font-weight-strong Food Menu:
+						p.font-weight-strong=package.foodMenu
+				.row.ml-4.mb-4
+					.col-md-6
+						h5.font-weight-strong Possible Description
+						p.font-weight-strong=package.possibleDescription
+					.col-md-6
+						h5.font-weight-strong Package Description
+						p.font-weight-strong=package.packageDescription
+				.row.ml-4.mb-4
+					.col
+					.col
+						h5.font-weight-strong Cancel Policy
+						p.font-weight-strong=package.possibleDescription
+
+
+		// Footer
+		footer.page-footer.font-small.unique-color-dark.mt-5
+			div.unique-color-dark
+				.container.text-center.mb-4
+					.row
+						.col.text-center.text-md-left.mb-4
+							h5.mt-4 Tourgo co.
+							p Mirpur-1, Dhaka 1216, Bangladesh
+							i.fas.fa-phone
+								a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+							br
+							i.fas.fa-envelope
+								a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+						.col-md-3.text-center.text-md-left.mb-4
+							h5.mt-4 Tourgo
+							a(href="/user/hotel/hotels") Hotels
+							br
+							a(href="/user/package/packages") Packages
+							br
+							a(href="/user/blog") Blog
+							br
+							a(href="/user/contact") Contact
+
+						.col-md-3.text-center.text-md-left.mb-3
+							h5.mt-4 For Partner
+							a(href="/user/partnerTerms") Register with hotels
+							br
+							a(href="/user/partnerTerms") Register with services
+							br
+							a(href="/user/partnerTerms") Sell your packages
+
+			.footer-copyright.text-center.py-3
+				a Copyright © By Tourgo !{new Date().getFullYear()}

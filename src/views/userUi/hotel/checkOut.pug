@@ -1,0 +1,201 @@
+extends ../../userUi/layout/common
+block content
+	.row.mb-5
+		.col.mb-5
+	.container.mt-5
+		h3.font-weight-light.text-center.mb-5 Confirm Your Bookings
+		.row
+			.col-md-8.mb-3
+				.card
+
+					.card-body
+						.row.mb-2
+							.col-md-5
+								img.card-img.card-img-top.rounded-0(src=room.image ? room.image.path : "/images/nophoto.png" alt="Card image " style="height:320px")
+							.col-md-7
+
+								h3.font-weight-light=hotel.name
+								p.font-weight-light=hotel.AddressFull
+								h6.font-weight-light=room.name
+								// depend on check in and check out time traveller selected.
+								//.row
+								//	.col-md-2
+								//		h3.span.badge.badge-info !{package.day} Days !{package.night} Nights
+								//	.col-md-2
+								//		h3.span.badge.badge-info  For !{package.noOfPerson} Person
+								//	.col-md-7
+								h1.badge.badge-info Includes :
+								p.mb-2=room.amenities
+								h1.badge.badge-info Room Capacity : !{room.capacityAdult}
+								//.row.mb-1.mt-4
+								//	.col
+								//		.card
+								//			.card-body.shadow-none.bg-light
+								//				.card-text
+								//					//h3.font-weight-light.text-center=moment(package.departure).format('DD MMM, Y')
+								//			.p.font-weight-light.text-center Check In
+								//
+								//	.col
+								//		.card.mr-lg-3
+								//			.card-body.shadow-none.bg-light
+								//				.card-text
+								//				//	h3.font-weight-light.text-center=moment(package.return).format('DD MMM, Y')
+								//			.p.font-weight-light.text-center Check Out
+			.col-md-4
+				.card
+					.card-header
+						h5.font-weight-light Payment Details:
+					.card-body
+						.row
+							.col-lg-6
+								p Hotel Charge:
+							.col
+							.col.text-lg-left
+								p !{room.price} ৳
+						.row
+							.col-lg-6
+								p No. Of Room:
+							.col
+							.col.text-lg-left
+								p ☓ !{qty}
+						.row
+							.col-lg-6
+								p Discount:
+							.col
+							.col.text-lg-left
+								p 0 ৳
+						hr.mb-2.mt-3
+						.row
+							.col-lg-6
+								h5.font-weight-bold Subtotal:
+							.col
+							.col.text-lg-left
+								-const subtotal = (room.price * qty);
+								p !{subtotal} ৳
+
+						.row
+							.col-lg-6
+								p.font-weight-light Service Charge (10%):
+							.col
+							.col.text-lg-left
+								-const serviceInclude = (subtotal * .10);
+								p !{serviceInclude} ৳
+						hr.mb-2.mt-3
+						.row
+							.col-lg-6
+								h5.font-weight-bold Total:
+							.col
+							.col.text-lg-left
+								-const totalPrice = subtotal + serviceInclude;
+								p !{totalPrice} ৳
+
+
+		.row.mt-5.mb-5
+			.col
+				.card
+					.card-body
+						.row
+							.col
+								h6.font-weight-strong About:
+								p.text-justify=hotel.about
+							.col
+								h6.font-weight-bold Cancellation Policy :
+								ul
+									li.mb-0-0.font-weight-light Before 7 days of checkin: FREE cancellation
+									li.mb-0.font-weight-light Within 7 days of checkin: full amount of the first night's charge
+									li.mb-0.font-weight-light Failure to arrive at the hotel or property will be treated as No-show and will incur the first night’s charge.
+									li.mb-0.font-weight-light During Blackout/Long Holidays period Cancellation policy will not be applicable.
+						hr.mb-5
+
+						h4.font-weight-bold Please Enter Your Details:
+						form(method="POST" action=makeUrl = ("/user/hotel/booking/") + room._id + '/' + hotel._id)
+							.row
+								.form-group.col
+									label(for="fullName") Your name
+									input#fullName.form-control(type="text"  name='name' value=__session.user.firstName + " " + __session.user.lastName readonly)
+								.form-group.col
+									label(for='guestName') Guest Name
+									input#guestName.form-control(type="text" name="guest" )
+							.row
+								.form-group.col
+									label(for=phone) Phone
+									input#phone.form-control( type="tel" name="phone" minlength="11" required)
+								.form-group.col
+									label(for=email) Email
+									input#email.form-control( type="email" name="email" required)
+									input.d-none(name='quantity' value=qty)
+									input.d-none(name='totalPrice' value=totalPrice)
+									input.d-none(name='subtotal' value=subtotal)
+									input.d-none(name='serviceInclude' value=serviceInclude)
+							.row
+								.form-group.col
+									label(for=checkIn) Check In
+									input#checkIn.form-control( type="text" name="checkIn" required)
+								.form-group.col
+									label(for=checkOut) Check Out
+									input#checkOut.form-control( type="text" name="checkOut" required)
+							.row.mb-3
+								.form-group.col-md-12
+									label(for=address) Address Line
+									textarea#address.form-control( name=address rows="4" )
+							.row.mb-4
+								.col
+									.custom-control.custom-radio
+										input#customRadio1.custom-control-input(type="radio" name="paymentOption" value='offline' required)
+										label.custom-control-label(for="customRadio1") Pay when you stay
+							.row.mb-4
+								.col
+									.custom-control.custom-radio
+										input#customRadio2.custom-control-input(type="radio" name="paymentOption" value="online" required)
+										label.custom-control-label(for="customRadio2") Online Payment
+							button.btn.btn-blue.waves-effect#btnRedirect(type="submit") Payment
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+
+
+	script.
+		window.onload = function () {
+			var $checkIn = $('[name="checkIn"]').daterangepicker({
+				minDate:moment(),
+				singleDatePicker:true
+			}).val('');
+			$checkIn.on("apply.daterangepicker", function (evt) {
+				$('[name="checkOut"]').daterangepicker({
+					minDate: moment($checkIn.val()).toDate(),
+					singleDatePicker:true
+				});
+			});
+		}
+

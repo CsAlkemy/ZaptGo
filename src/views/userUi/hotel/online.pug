@@ -1,0 +1,82 @@
+extends ../../userUi/layout/common
+
+block content
+	.row.mb-5
+		.col.mb-5
+	.container.mt-5
+		.card
+			.card-body
+				h4.text-center Thank You for make your hotel booking with us!
+				.row
+					.col-md-7.mt-5
+						.view.py-5.px-5
+							img.img-responsive.card-img(src="/img/svg/undraw_online_banking_7jy4.svg" style="height: 300px")
+					.col.mt-5
+						#paymentContainer
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+
+
+	script(src="https://www.paypal.com/sdk/js?client-id=AZApLdjB85cEOSwm8i5tnoDpSoqSi0NIS3JwpSUOEJQWhAU3IPnbRVKzF6ZicC-Jf-h_YZI-2tXV_c4z")
+
+	script.
+		let value=Math.ceil(!{booking.totalPrice}/84)
+		console.log(value);
+		paypal.Buttons({
+			createOrder: function (data, actions) {
+				return actions.order.create({
+					purchase_units: [{
+						amount: {
+							//value: !{(booking.totalPrice)}
+							value: value
+						}
+					}]
+				});
+			},
+			onApprove: function (data, actions) {
+				return actions.order.capture().then(function (details) {
+					console.log(details.id);
+					$.ajax({
+						url: "/user/hotel/payPalPay",
+						data: {bookID: '!{booking._id}', transactionId: details.id},
+						type: "POST",
+						success: function (res) {
+							open('/user/hotel/onlinePdf/!{booking._id}','_self')
+
+						}
+					})
+				});
+			}
+		}).render('#paymentContainer')
+

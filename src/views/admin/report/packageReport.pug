@@ -1,0 +1,60 @@
+extends ../../layout/layout
+block topRightContent
+	.col-md-10
+		h3.text-center.font-weight-light.text-dark Package Booking Report
+
+block content
+	.card
+		.card-body
+			.card-header.bg-light
+				h5.font-weight-light Showing result of:
+				form
+					.form-group.col
+						select.form-control(name='companyID')
+							each package in packages
+								//option=packageBooking.company
+								option(value=package._id selected=selectedPackage == package._id.toString())=package.name
+					.form-group.col
+						button.btn.btn-success(type='submit') Search
+			.table-responsive
+				table#table.table.table-striped.text-dark
+					thead
+						tr
+							th Package Provider
+							th Package Name
+							th Departure
+							th Return
+							th Amount
+					tbody
+						-
+							var totalAmount = 0
+						each packageBooking in packageBookings
+							-
+								totalAmount += Math.floor(packageBooking.totalAmount)
+							tr
+								td=packageBooking.company
+								td=packageBooking.name
+								td=moment(new Date(packageBooking.departure)).format('MMM DD, YYYY')
+								td=moment(new Date(packageBooking.return)).format('MMM DD, YYYY')
+								td=packageBooking.totalAmount
+
+					tfoot
+						tr
+							th(colspan=4) Total:
+							th !{totalAmount} BDT
+
+	script.
+		window.onload = function () {
+			$('#table').DataTable({
+				infoCallback: function (settings, start, end, max, total, pre) {
+					return pre;
+				},
+				serverSide: false,
+				ordering: true,
+				ajax: false
+			});
+
+
+		};
+
+

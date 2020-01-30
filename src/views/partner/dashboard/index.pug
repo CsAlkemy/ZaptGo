@@ -1,0 +1,56 @@
+extends ../../layout/layout
+
+block content
+	h1.text-dark Hello! Mr. !{__session.user.name}
+	p.font-weight-light.text-dark Add your property to get booked
+	.row.mt-5
+		-var subtotal = {}
+		-var Labels = []
+		-var values = {subtotal: []};
+		//
+		each tP in revenue
+			-Labels.push(tP._id)
+			-subtotal[tP._id] = tP.amount;
+		//
+		-Labels.sort();
+		each labelValue in Labels
+			if subtotal[labelValue]
+				-values.subtotal.push(subtotal[labelValue])
+			else
+				-values.subtotal.push(0)
+		.col-xl-12.col-lg-12
+			.card.shadow.mb-4
+				.card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between.bg-light
+					h6.m-0.font-weight-bold  Company Revenue
+				// Card Body
+				.card-body
+					canvas#revenue.chartjs-render-monitor.embed-responsive(style="display: block; width: 679px; height: 200px;" width="679" height="200")
+
+	script.
+		window.onload = function () {
+			let dayLabels = !{JSON.stringify(Labels)}
+			new Chart(document.getElementById('revenue').getContext('2d'), {
+				type: 'line',
+				data: {
+					labels: dayLabels.map(value=>moment(value).format('D MMM YY')),
+					//labels:['test a', 'test b', 'test c', 'test d' ],
+					datasets: [{
+						label: 'Amount by Date',
+						backgroundColor: '#B2EBF2',
+						borderColor: '#455A64',
+						data: !{JSON.stringify(values.subtotal)},
+						borderWidth: 2
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								aspectRatio: false
+							}
+						}]
+					}
+				}
+			});
+		}

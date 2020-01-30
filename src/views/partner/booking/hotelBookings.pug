@@ -1,0 +1,55 @@
+extends ../../layout/layout
+block content
+	h3.font-weight-light.text-center.mb-3 Hotel Room Bookings
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped
+					thead
+						tr
+							th Guest Name
+							th Email
+							th Phone
+							th Room
+							th Qty
+							th Price
+							th Check In
+							th Check Out
+							th Payment Status
+
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				sorting: [[6, 'desc']],
+				columnDefs: [{
+					render: function (item) {
+						return moment(item).format('DD MMM, Y');
+					},
+					targets: [6, 7]
+
+				}
+					, {
+						render: function (item) {
+							if (item == null) {
+								return "<span class=\"badge badge-danger\">Not Paid</span>"
+							} else {
+								return "<span class=\"badge badge-success\">Paid</span>"
+							}
+						},
+						targets: 8,
+
+					}
+
+				],
+				columns: [{data: 'guestName'}, {data: 'email'}, {data: 'phone'}, {data: 'bookon'}, {data: 'quantity'}, {data: 'subtotal'}, {data: 'checkIn'}, {data: 'checkOut'}, {data: 'transactionID'}, {
+					//data: 'actions',
+					orderable: true,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},
+				{column_number: 1, filter_default_label: "Type here..", filter_type: "text"},]);
+
+
+		};

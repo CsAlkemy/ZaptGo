@@ -1,0 +1,206 @@
+extends ../home/layout/common
+block content
+	.row
+		.col
+			.view.z-depth-1
+				img.img-responsive(src='/images/mainUi/slider3.jpg' alt="nav image" style="height:500px;")
+				.card-img-overlay
+					.row
+						.col-md-1
+						.col-md-3
+							.card.rounded-1.mt-3
+								.card-body
+									form(action=("/areaSearch") method="POST"  novalidate)
+										h4.font-weight-light.text-center Search Hotel
+										.row
+											.col-md-12
+												.form-group.text-left
+													label(for="place") Destination
+													select#place.form-control(name="destination" required)
+										.row
+											.col-md-6
+												.form-group.text-left
+													label(for="checkIn") Check In
+													input#checkIn.form-control(type="text" name="checkIn" required)
+											.col-md-6
+												.form-group.text-left
+													label(for="checkOut") Check Out
+													input#checkOut.form-control(type="text" name="checkOut" required)
+										.row.mb-3
+											.col
+												.form-group.text-left
+													label(for="rooms") Rooms
+													input#rooms.form-control(name="rooms" min="1" max="10" type="number" required)
+											.col
+												.form-group.text-left
+													label(for="adult") Adult
+													input#adult.form-control(type="number" min="1" max="10" name="adult" required)
+											.col
+												.form-group.text-left
+													label(for="child") Child
+													input#child.form-control(type="number" min="1" max="10" name="child")
+										.row
+											.col
+												.form-group
+													button.btn.btn-block.btn-blue.waves-effect(type="submit" ) Search
+						.col
+
+	.container.mt-5.mb-5
+		h2.font-weight-light.text-center Popular Places
+		hr.mb-4
+		.row.mt-4.pt-1
+			each Area in area
+				.col-lg-6.col-md-12.mb-3.mb-md-4.pb-lg-2
+					.view.zoom.z-depth-1(id=Area._id)
+						img.img-fluid.w-100(src=Area.image ? Area.image.path : "/img/svg/undraw_contact_us_15o2.svg" alt="Card image cap" style="height:330px")
+						.mask.rgba-stylish-strong
+							.dark-grey-text.d-flex.align-items-center.pt-4.ml-lg-3.ml-3.pl-lg-3.pl-md-5.pl-3
+								div
+									h2.card-title.font-weight-bold.pt-2.text-white
+										strong=Area.name
+									p.text-white
+										-
+											let con = count.find(co => co._id.toString() === Area._id.toString())
+									h1.badge.badge-info.ml-2 Total !{con ? con.count : 0} Hotels
+									p.text-white
+									a.btn.btn-primary.btn-sm.rounded-1(type="button" href='/hotels/'+Area._id) Hotels
+
+
+	.container.mt-5.mb-5.text-left
+		h2.font-weight-light.text-center Running Packages
+		hr.mb-4
+		.row.mt-5.mb-5
+			each  Package in packages
+				.col-md-6.mb-5
+					.card(id=Package._id)
+						.row
+							.col-md-5
+								.view
+									img.img-fluid(src=Package.image ? Package.image.path: "/img/svg/undraw_contact_us_15o2.svg" alt="Card image cap" style="height:170px")
+									.mask.rgba-white-light
+									.card-img-overlay
+							.col-md-6
+								h5.mt-3=Package.name
+								h5.font-weight-light Price: !{Package.price} ৳
+								.row
+									.col-md-2
+										p.badge.badge-primary !{Package.day} Days
+									.col-md-2
+										p.badge.badge-dark.text-white !{Package.night} Nights
+									.col
+								a.btn.btn-primary.btn-sm.rounded-0(type="button" href="/packagePreview/"+Package._id) Details
+
+	.container.mt-5.mb-5
+		h2.text-center YOUR BEST TRAVEL PARTNER
+		p.text-center.mb-3 Travel with tourgo.
+		.card-deck.mt-5
+			.card
+				br
+				img.card-img-top(src="/img/svg/hand.svg" alt="..." style="height:150px" )
+				.card-body.mt-3
+					h5.card-title.text-center Lowest Price
+					p.card-text
+						| if you can find a lower price of the Tourgo special hotels anywhere, we'll make it lowest for you.
+			.card
+				br
+				img.card-img-top(src="/img/svg/travel.svg" alt="..." style="height:150px")
+				.card-body.mt-3
+					h5.card-title.text-center Trusted Travel Partner
+					p.card-text One stop solution provider truly holding Bangladesh and its beauty.
+			.card
+
+				br
+				img.card-img-top.rounded-circle(src="/img/svg/flex.svg" alt="..." style="height:150px")
+				.card-body.mt-3
+					h5.card-title.text-center Freebies and flexibility
+					p.card-text
+						| Flexible and secured payment options including PayPal, Cards, & Pay at Hotels.
+			.card
+				br
+				img.card-img-top.rounded-circle(src="/img/svg/chat.svg" alt="..." style="height:150px")
+				.card-body.mt-3
+					h5.card-title.text-center 24/7 Customer Service
+					p.card-text
+						| Close to our valued customers
+
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/hotels") Hotels
+						br
+						a(href="/packages") Packages
+						br
+						a(href="/blog") Blog
+						br
+						a(href="/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/login") Partner login
+						br
+						a(href="/partnerTerms") Register with hotels
+						br
+						a(href="/partnerTerms") Register with services
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+
+
+
+
+
+
+	script.
+		window.onload = function () {
+			$("#place").selectize({
+				plugins: ["clear_button"],
+				dropdownParent: "body",
+				placeholder: "Select Area",
+				preload: true,
+				sortField: 'text',
+				valueField: 'id',
+				labelField: 'name',
+				searchField: 'name',
+				load: function (query, callback) {
+					$.ajax({
+						dataType: "json",
+						delay: 250,
+						type: 'post',
+						url: "!{('/getArea')}",
+						data: {term: query, categoryOnly: false, categoryID: $("#Area").val()},
+						error: function (err) {
+							console.log(err);
+							callback();
+						},
+						success: function (res) {
+							console.log(res);
+							callback(res);
+						}
+					});
+				}
+			});
+			var $checkIn = $('[name="checkIn"]').daterangepicker({
+				minDate: moment(),
+				singleDatePicker: true
+			}).val('');
+			$checkIn.on("apply.daterangepicker", function (evt) {
+				$('[name="checkOut"]').daterangepicker({
+					minDate: moment($checkIn.val()).toDate(),
+					singleDatePicker: true
+				});
+			});
+
+		}

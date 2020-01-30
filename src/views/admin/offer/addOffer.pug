@@ -1,0 +1,33 @@
+extends ../../layout/layout
+block topRightContent
+	.col-md-1
+	.col-md-2
+		a.btn.btn-outline-primary.ml-2(href=makeUrl("/offer/offers")) Offers
+	.col
+block content
+	.container
+		.row
+			.col
+			.col-md-10
+				.card.card-no-border.mb-5
+					.card-header.bg-light
+						h3.font-weight-light.text-center Add Offer
+					.card-body
+						form(action=makeUrl = "/admin/offer/addOffer" method="POST" )
+							.form-row
+								.form-group.col-md-8
+									label(for="offer") Offer name
+									input#offer.form-control(type="text" name="offerName" required placeholder="name a offer")
+								.form-group.col-md-4
+									label(for="percentage") Percentage ( %)
+									input#percentage.form-control(type="number" name="percentage" required placeholder="e.g 15")
+							.form-row
+								.form-group.col-md-12
+									label(for="Promo") Promo Code
+									input#Promo.form-control(type="text" name="code" required placeholder="e.g SAINT1520")
+							.form-row
+								.form-group.col-md-12
+									label(for="dis") Description
+									textarea#dis.form-control(type="text" name="description" placeholder="Description")
+							button.btn.btn-primary.rounded-0(type="submit") Submit
+			.col

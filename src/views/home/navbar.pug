@@ -1,0 +1,30 @@
+mixin navbar
+	.content
+		nav.navbar.fixed-top.navbar-expand-lg.navbar-light.scrolling-navbar.white
+			.container
+				a.navbar-brand.font-weight-bold(href="/")
+					strong TOURGO
+				button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation")
+					span.navbar-toggler-icon
+				#navbarSupportedContent-4.collapse.navbar-collapse
+					ul.navbar-nav.ml-auto
+						li.nav-item.ml-3
+							a.nav-link.waves-effect.waves-light.dark-grey-text.font-weight-bold(href="/hotels")
+								| Hotels
+						li.nav-item.ml-3
+							a.nav-link.waves-effect.waves-light.dark-grey-text.font-weight-bold(href="/packages")
+								| Packages
+						li.nav-item.ml-3
+							a.nav-link.waves-effect.waves-light.dark-grey-text.font-weight-bold(href="/contact")
+								| Contact Us
+						li.nav-item.ml-3
+							a.nav-link.waves-effect.waves-light.dark-grey-text.font-weight-bold(href="/login")
+								|  Login
+						li.nav-item.ml-3
+							a.nav-link.waves-effect.waves-light.dark-grey-text.font-weight-bold(href="/apply")
+								|  Sign up
+		block content
+
+.footer-copyright.py-3.text-center.sticky-footer
+		.container-fluid
+			span Copyright © By Tourgo !{new Date().getFullYear()}

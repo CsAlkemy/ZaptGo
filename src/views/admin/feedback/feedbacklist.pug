@@ -1,0 +1,36 @@
+extends ../../layout/layout
+block topRightContent
+	h3.font-weight-light.text-center.text-dark Pending Questions
+	a
+
+block content
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped.text-dark
+					thead
+						tr
+							th User Name
+							th email
+							th Question
+							th Feedback
+
+
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+				}
+				],
+				columns: [{data: 'name'}, {data: 'email'}, {data: 'question'},{
+					data: 'actions',
+					orderable: false,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},
+			]);
+
+
+		};

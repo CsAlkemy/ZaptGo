@@ -1,0 +1,91 @@
+extends ../../userUi/layout/common
+block content
+	.row.mb-5
+		.col.mt-5
+	.row.mt-5
+		.col.text-center.mt-5
+			h1 Your Hotel Bookings
+
+	.row.mb-5
+		.col.mb-5
+	//.container
+	//	.row
+	//		.col.text-white
+	//			a.button.btn.btn-dark.btn-lg.mb-0(role="button" aria-pressed="true") Recent
+	//			a.button.btn.btn-dark.btn-lg.mb-0(role="button" aria-pressed="true") History
+	//
+	//		.col
+	//		.col
+
+	.container.mt-5
+		each book in bookings
+			.card.mt-3.mb-4(id=book._id)
+				if(book.transactionID==null)
+					if(moment().format("MMM DD, YYYY")>=moment(book.checkIn).format('MMM DD, YYYY'))
+						.card-header.bg-info.text-white Not Paid
+							p.float-right Offline
+				else
+					.card-header.bg-primary.text-white TNX ID- !{book.transactionID}
+						p.float-right Paid Online
+
+				.card-body
+				.row.mb-5.mt-4
+					.col-md-2
+						.card.ml-lg-3
+							.card-body.shadow-none.bg-light
+								.card-text
+									h3.text-center=moment(book.checkIn).format('DD MMM Y')
+							.p.font-weight-light.text-center Check In
+
+					.col-md-2
+						.card
+							.card-body.shadow-none.bg-light
+								.card-text
+									.h3.text-center=moment(book.checkOut).format('DD MMM Y')
+							.p.font-weight-light.text-center Check Out
+					.col-md-8
+						h3.font-weight-light Room Name: !{book.bookon}
+						h5.font-weight-light Book Id: !{book._id}
+						h5.font-weight-light Price: !{book.totalPrice}
+						if(book.paymentOption==="online")
+							span.badge.badge-primary.font-weight-light Payment: !{book.paymentOption}
+						else
+							span.badge.badge-danger.font-weight-light Payment: !{book.paymentOption}
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+
+
+
+

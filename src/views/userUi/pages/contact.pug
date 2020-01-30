@@ -1,0 +1,77 @@
+extends ../../userUi/layout/common
+block content
+	.row.mb-5
+		.col.mb-5
+	.container.mb-5
+		.card.mt-5
+			img.card-img-top.mb-5(src="/img/svg/undraw_contact_us_15o2.svg" alt="Card image cap")
+			.card-body
+				h3
+					span.badge.badge-primary.tags Contact us
+				p.card-text.font-weight-light.mb-5 Contact us if you have any queries. You may need to provide us your booking ID which can be found in your bookings page.
+				.col-3
+				.row.mt-5
+					.col-md-6.mb-5
+						h5.font-weight-light TOURGO co.
+						a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+						p.font-weight-light Address: Mirpur 1, Dhaka-1216, Bangladesh
+					.col-md-6.mb-5
+						form(action=makeUrl = "/user/contact" method="POST" )
+							.form-group
+								label(for="name") Name
+								input#name.form-control(type="text" name="name" required)
+							.form-group
+								label(for="email") Email
+								input#email.form-control(type="email" name="email" required)
+							.form-group
+								label(for="question") Your Question
+								textarea#question.form-control(rows="4" name="question" required)
+							button.btn.btn-primary(type="submit" data-toggle="modal" data-target="#basicExampleModal") Submit
+	.container
+		// Modal
+		#basicExampleModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+			.modal-dialog.modal-notify.modal-primary(role="document")
+				.modal-content
+					.modal-header
+						h5.heading.lead Message Sent
+						button.close(type="button" data-dismiss="modal" aria-label="Close")
+							span.white-text(aria-hidden="true") ×
+					.modal-body
+						.text-center
+							p Thank you for contacting us . We will get back to you soon through email.
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}

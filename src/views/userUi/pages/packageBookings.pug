@@ -1,0 +1,59 @@
+extends ../../userUi/layout/common
+block content
+	.row.mb-5
+		.col.mt-5
+	.row.mt-5
+		.col.text-center.mt-5
+			h1 Your Package Bookings
+	.row.mb-5
+		.col.mb-5
+	.container.mt-5
+		.row
+			each book in bookings
+
+				.card.mt-3.col-md-5.mb-3.ml-4(id=book._id)
+					if(book.transactionID==null)
+						.card-header.bg-danger.text-white Unpaid
+					else
+						.card-header.bg-primary.text-white Paid (TNX- !{book.transactionID})
+					.card-body
+						.row.mb-5.mt-4
+							.col
+								h3.font-weight-light Package: !{book.packageName}
+								h5.font-weight-light Price: !{book.totalPrice}
+								p.font-weight-light Payment Option: !{book.paymentOption}
+								h5.font-weight-light Book Id: !{book._id}
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}

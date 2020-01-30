@@ -1,0 +1,35 @@
+extends ../../layout/layout
+
+block content
+	h3.font-weight-light.text-center.mb-3 Registered Travellers
+	.card
+		.card-body
+			.table-responsive
+				table#table.table.table-striped.text-dark
+					thead
+						tr
+							th First Name
+							th Last Name
+							th Email
+							th Phone
+	script.
+		window.onload = function () {
+			$.fn.dataTable.ext.errMode = 'none';
+			let $table = $("#table").DataTable({
+				columnDefs: [{
+					render: function (item) {
+						return item;
+					},
+					targets: 2
+				},
+				],
+				columns: [{data: 'firstName'}, {data: 'lastName'}, {data: 'email'}, {data: 'phone'}, {
+					orderable: false,
+					searchable: false
+				}]
+			});
+			yadcf.init($table, [{column_number: 0, filter_default_label: "Type here..", filter_type: "text"},
+				{column_number: 2, filter_default_label: "Type here..", filter_type: "text"},]);
+
+
+		};

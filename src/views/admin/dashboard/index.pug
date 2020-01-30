@@ -1,0 +1,187 @@
+extends ../../layout/layout
+
+block content
+	.row
+		// Earnings (Monthly) Card Example
+		.col-xl-3.col-md-6.mb-4
+			.card.border-left-primary.shadow.h-100.py-2
+				.card-body
+					.row.no-gutters.align-items-center
+						.col.mr-2
+							.text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 Total Hotel
+							.h5.mb-0.font-weight-bold.text-gray-800 !{hotels}
+						.col-auto
+							i.fas.fa-h-square.fa-2x.text-gray-300
+		// Earnings (Monthly) Card Example
+		.col-xl-3.col-md-6.mb-4
+			.card.border-left-success.shadow.h-100.py-2
+				.card-body
+					.row.no-gutters.align-items-center
+						.col.mr-2
+							.text-xs.font-weight-bold.text-success.text-uppercase.mb-1 Running Packages
+							.h5.mb-0.font-weight-bold.text-gray-800 !{packages}
+						.col-auto
+							i.fab.fa-dropbox.fa-2x.text-gray-300
+		// Earnings (Monthly) Card Example
+		.col-xl-3.col-md-6.mb-4
+			.card.border-left-info.shadow.h-100.py-2
+				.card-body
+					.row.no-gutters.align-items-center
+						.col.mr-2
+							.text-xs.font-weight-bold.text-info.text-uppercase.mb-1 Total Bookings
+							.row.no-gutters.align-items-center
+								.col-auto
+									.h5.mb-0.mr-3.font-weight-bold.text-gray-800 !{booking}
+
+						.col-auto
+							i.fas.fa-book.fa-2x.text-gray-300
+		// Pending Requests Card Example
+		.col-xl-3.col-md-6.mb-4
+			.card.border-left-warning.shadow.h-100.py-2
+				.card-body
+					.row.no-gutters.align-items-center
+						.col.mr-2
+							.text-xs.font-weight-bold.text-warning.text-uppercase.mb-1 Travelers
+							.h5.mb-0.font-weight-bold.text-gray-800 !{traveler}
+						.col-auto
+							i.fas.fa-hiking.fa-2x.text-gray-300
+	// chart section
+
+	.row
+
+		-var totalPrice = {}
+		-var revLabels = []
+		-var values = {totalPrice: [], updateAt: [], doughnut: []};
+
+		each tP in revenue
+			-revLabels.push(tP._id)
+			-totalPrice[tP._id] = tP.amount;
+
+		-revLabels.sort();
+		each labelVal in revLabels
+			if totalPrice[labelVal]
+				-values.totalPrice.push(totalPrice[labelVal])
+			else
+				-values.totalPrice.push(0)
+		.col-xl-8.col-lg-7
+			.card.shadow.mb-4
+				.card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between.bg-light
+					h6.m-0.font-weight-bold Daily Revenue
+				// Card Body
+				.card-body
+					canvas#revenue.chartjs-render-monitor.embed-responsive(style="display: block; width: 679px; height: 320px;" width="679" height="320")
+		// Pie Chart
+		-var tourgo = {}
+		-var partner = {}
+		-var douLabel = []
+		each val in doughnut
+			-douLabel.push(val._id)
+			-tourgo[val._id] = val.tourgo;
+			-partner[val._id] = val.partner;
+		each sector in douLabel
+			if tourgo[sector] && partner[sector]
+				-values.doughnut.push(tourgo[sector])
+				-values.doughnut.push(partner[sector])
+			else
+				-values.doughnut.push(0)
+		.col-xl-4.col-lg-5
+			.card.shadow.mb-4
+				.card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between.bg-light
+					h6.m-0.font-weight-bold  Revenue
+				// Card Body
+				.card-body.mb-5
+					canvas#pieChart.chartjs-render-monitor.embed-responsive(width="307" height="270" style="display: block; width: 307px; height: 270px;")
+
+	.row.mb-5
+		-var updateAt = {}
+		-var labels = []
+		each bookingsDate in bookingDate
+			-labels.push(bookingsDate._id);
+			-updateAt[bookingsDate._id] = bookingsDate.count;
+		-labels.sort().reverse();
+		each label in labels
+			if updateAt[label]
+				-values.updateAt.push(updateAt[label])
+			else
+				-values.updateAt.push(0)
+
+		.col
+			.card.shadow.mb-4
+				.card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between.bg-light
+					h6.m-0.font-weight-bold Monthly Bookings
+				// Card Body
+				.card-body.mt-5
+					canvas#bookings.chartjs-render-monitor.embed-responsive(style="display: block; width: 679px; height: 320px;" width="679" height="200")
+
+
+	script.
+		window.onload = function () {
+			let dayLabels = !{JSON.stringify(revLabels)}
+			new Chart(document.getElementById('revenue').getContext('2d'), {
+				type: 'line',
+				data: {
+					labels: dayLabels.map(value=>moment(value).format('D MMM YY')),
+					datasets: [{
+						label: 'Amount By date',
+						backgroundColor: '#B2EBF2',
+						borderColor: '#455A64',
+						data: !{JSON.stringify(values.totalPrice)},
+						borderWidth: 2
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								aspectRatio: false
+							}
+						}]
+					}
+				}
+			});
+
+			let monthLabels = !{JSON.stringify(labels)};
+			new Chart(document.getElementById('bookings').getContext('2d'), {
+				type: 'bar',
+				data: {
+					labels: monthLabels.map(value=>moment(value).format('MMMM YYYY')),
+				datasets:
+				[{
+					label: 'Bookings by month',
+					data: !{JSON.stringify(values.updateAt)},
+					backgroundColor: '#2196F3',
+					borderWidth: 2
+				}]
+			},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								aspectRatio: true
+							}
+						}]
+					}
+				}
+			})
+			;
+			var ctx = document.getElementById('pieChart').getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'doughnut',
+				data: {
+					labels: ['Tourgo',
+						'Partner'],
+					datasets: [{
+						data: !{JSON.stringify(values.doughnut)},
+						backgroundColor: [
+							'#2196F3',
+							'#00E676',
+						]
+					}]
+				},
+				options: {}
+			});
+
+
+		}

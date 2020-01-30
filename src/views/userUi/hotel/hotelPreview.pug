@@ -1,0 +1,107 @@
+extends ../../userUi/layout/common
+block content
+	.row.mb-5
+		.col.mb-5
+	.container.mt-5
+		.card
+			.card-body
+			.row.mb-2
+				.col-md-7
+					img.card-img.mb-5(src=hotel.image ? hotel.image.path : "/img/svg/undraw_contact_us_15o2.svg" alt="Card image cap" style="height:322px")
+				.col-md-5
+					h3.font-weight-light=hotel.name
+					h5.font-weight-light=hotel.AddressFull
+					-var start = 1
+						while start <= hotel.star
+							-let a = start++
+							i.fas.fa-star(style="color:#03A9F4")
+					h5.font-weight-light Features : !{hotel.feature}
+					p.font-weight-light.mb-5 Overview: !{hotel.about}
+					.row.mb-3
+						.col-md-6
+							.card
+								.card-body.shadow-none.bg-light
+									.card-text
+										h3.font-weight-light.text-center=hotel.checkIn
+								.p.font-weight-light.text-center Check In
+
+						.col-md-6
+							.card.mr-lg-3
+								.card-body.shadow-none.bg-light
+									.card-text
+										h3.font-weight-light.text-center=hotel.checkOut
+								.p.font-weight-light.text-center Check Out
+
+	each room in hotel.rooms
+		-
+			let avialable=availables.find(av=>av._id.toString()===room._id.toString())
+			avialable=avialable||{count:0}
+		.container.mt-5
+			.card.mb-5
+				.card-body
+				.row
+					.col-md-4
+						img.card-img.card-img-top.rounded-0.text-center(src=(room.image ? room.image.path : "/images/nophoto.png") alt="Card image cap" style="height:220px")
+					.col-md-8.mb-1
+						h3.font-weight-light=room.name
+						h5.font-weight-light Price: !{room.price} per Night
+						-var start = 1
+							while start <= room.capacityAdult
+								-let a = start++
+								i.fas.fa-user(style="color:#212121")
+						p For  !{room.capacityAdult} Person
+						p.font-weight-light=room.smokingPolicy
+						p.font-weight-light.span.badge.badge-info.mb-2 Amenities :
+						p.font-weight-light=room.amenities
+						p.font-weight-light Available Room:  !{room.noOfRoom - avialable.count}
+						p.font-weight-light.text-danger *Enter number of room
+						.row
+							.form-group.col-md-2
+								input.form-control(type="number" name=room._id min="1" max=avialable value="1" placeholder="no. of room" required)
+							.col-md-2
+								button.btn-sm.btn-outline-primary.btn-rounded.waves-effect(type="button" onclick="saveBooking('" + room._id + "','" + hotel._id + "'," + (room.noOfRoom - avialable.count) + ")") Book Now
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}
+
+
+
+
+	script.
+		function saveBooking(roomID, hotelID, max) {
+			if ($('input[name="' + roomID + '"]').val() > max) {
+				alert("You can book only " + max + " Rooms")
+			} else {
+				open('!{makeUrl("/hotel/checkOut?roomId=")}' + roomID + '&hotelId=' + hotelID + '&roomQuantity=' + $('input[name="' + roomID + '"]').val(), '_self');
+			}
+		}

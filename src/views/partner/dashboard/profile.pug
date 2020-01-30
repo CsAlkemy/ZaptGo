@@ -1,0 +1,31 @@
+extends ../../layout/layout
+block content
+	.container.text-dark
+		.row
+			.col-11
+				.card.mb-5
+					.card-header.bg-light.mb-5
+						h2.font-weight-light.text-center.text-dark Company Profile
+
+					.card-body
+						.row
+							.col-md-1
+							.col-md-6
+								h3.mb-0.text-truncated !{profile.name}
+								p.lead  Tourgo Partner
+
+								p
+									| Address: !{profile.address}
+								p
+									| Company Name: !{profile.company}
+								p
+									| Property Type: !{profile.property}
+
+								h5.font-weight-light
+									span.badge.badge-info.tags Email : !{profile.email}
+								h5.font-weight-light
+									span.badge.badge-info.tags Phone: !{profile.phone}
+								a.button.btn.btn-success.rounded-0.px-5.mt-2(href=makeUrl("/dashboard/editProfile/") + __session.user._id) Edit
+							.col-md-5
+								img.mx-auto.img-fluid.img-responsive(src=(profile.image?profile.image.path:"/img/svg/undraw_profile_data_mk6k.svg") alt="" style="height:300px")
+

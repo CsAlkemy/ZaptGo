@@ -1,0 +1,134 @@
+extends ../../layout/layout
+block content
+	.container
+		.card.card-no-border.mb-5
+			.card-header.text-inverse.text-white
+				| Add New Room
+			.card-body
+				form(action=makeUrl = "/partner/hotel/addRoom"  enctype="multipart/form-data" method="POST" )
+					.row
+						.col-md-12
+							h4.pt-4 Room Details
+							p.border-bottom.border-gray.font-weight-light Add new room under your existing hotel.
+						.col-md-12
+							.form-group
+								label(for="hotel") Hotel
+								select#hotel.form-control(name="hotel" required)
+					.row
+						.col-md-12
+							.form-group
+								label(for="room") Room Name
+								input#room.form-control(type="text" name="name" placeholder='e.g- Standard Double Room' required)
+					.row
+						.col-md-6
+							.form-group
+								label(for="capacityA") Capacity (Adult)
+								input#capacityA.form-control(type="text" name="capacityAdult" max="10" placeholder='Capacity' required)
+
+						.col-md-6
+							.form-group
+								label(for="capacityChild") Capacity (Baby)
+								input#capacityChild.form-control(type="text" placeholder='CapacityOther' name="capacityChild" )
+					.row
+						.col-md-6
+							.form-group
+								label(for="noOfRoom") Number of Room (on this type)
+								input#noOfRoom.form-control(type="number" name="noOfRoom" required)
+						.col-md-6
+							.form-group
+								label(for="size") Room Size (sq ft)
+								input#size.form-control(type="text" name="size" placeholder="In square feet")
+					.row
+						.col-md-6
+							.form-group
+								label(for="price") Price per Night
+								input#price.form-control(type="text" name="price" required)
+						.col-md-6
+							.form-group
+								label(for="Smoking") Smoking Policy
+								select#Smoking.form-control(name="smokingPolicy")
+									option No-smoking
+									option Smoking
+									option Both non-smoking and smoking
+					.row
+						.col-md-12.pt-4.pb-2
+							h4.pt-4.text-dark Amenities and Services
+							p.border-bottom.border-gray.font-weight-light Create a list  of your all amenities and services.
+					.row#repeater
+					.row
+						.col-md-12.pt-4.pb-5
+							.btn-group
+								button.btn.btn-danger.btn-sm#reduce(type="button")
+									i.fa.fa-minus
+								button.btn.btn-success.btn-sm#addMore(type="button")
+									i.fa.fa-plus
+					.row
+						.col-md-6
+							h5.font-weight-lighter.border-bottom.border-gray.pb-2 Add Images (of your room)
+							.form-group.pt-5.pb-5
+								input#image.form-control-file(name="image" type="file")
+						.col-md-6
+							h5.font-weight-lighter.border-bottom.border-gray.pb-2 Image preview:
+							img#preview.img-responsive.border-dark(alt="Image" height=150 src="/images/noimage.png")
+						.col-md-12.pt-2
+							button.btn.btn-primary.align-content-center(type="submit") Submit
+
+
+	script.
+		window.onload = function () {
+			var counter = 1;
+			$(document).on('click', '#addMore', function () {
+				let html = '<div class="col-md-6" id="amenities' + counter + '">' +
+					'<div class="form-group">' +
+					'<label>Amenities ' + counter + '</label>' +
+					'<input class="form-control" name="amenities[]" placeholder="e.g- Wifi" type="text">' +
+					'</div>' +
+					'</div>'
+				$("#repeater").append(html);
+				counter++;
+			});
+			$(document).on('click', '#reduce', function () {
+				if (counter > 1) {
+					counter--;
+					$("#amenities" + counter).remove();
+				}
+			});
+
+			$("#hotel").selectize({
+				plugins: ["clear_button"],
+				dropdownParent: "body",
+				placeholder: "Select a Hotel",
+				preload: true,
+				sortField: 'text',
+				valueField: 'id',
+				labelField: 'name',
+				searchField: 'name',
+				load: function (query, callback) {
+					$.ajax({
+						dataType: "json",
+						delay: 250,
+						type: 'post',
+						url: "!{('/partner/hotel/getHotel')}",
+						data: {term: query, categoryOnly: false, categoryID: $("#hotel").val()},
+						error: function (err) {
+							console.log(err);
+							callback();
+						},
+						success: function (res) {
+							console.log(res);
+							callback(res);
+						}
+					});
+				}
+			});
+
+			document.getElementById("image").onchange = function () {
+				let reader = new FileReader();
+				reader.onload = function (e) {
+					document.getElementById("preview").src = e.target.result;
+				};
+				reader.readAsDataURL(this.files[0]);
+			};
+
+
+		}

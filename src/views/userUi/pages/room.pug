@@ -1,0 +1,79 @@
+extends ../../userUi/layout/common
+
+block content
+	.container.dark-grey-text.mt-5
+		.row.wow.fadeIn(style="visibility: visible; animation-name: fadeIn;")
+			.col-md-6.mb-4
+				img.img-fluid(src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" alt="")
+			.col-md-6.mb-4
+				.p-4
+					.mb-3
+						a(href="")
+							span.badge.purple.mr-1 Category 2
+						a(href="")
+							span.badge.blue.mr-1 New
+						a(href="")
+							span.badge.red.mr-1 Bestseller
+					p.lead
+						span.mr-1
+							del $200
+						span $100
+					p.lead.font-weight-bold Description
+					p
+						| Lorem ipsum dolor sit amet consectetur adipisicing elit. Et dolor suscipit libero eos atque quia ipsa
+						| sint voluptatibus!
+						| Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.
+					form.d-flex.justify-content-left
+						input.form-control(type="number" value="1" aria-label="Search" style="width: 100px")
+						button.btn.btn-primary.btn-md.my-0.p.waves-effect.waves-light(type="submit")
+							| Add to cart
+							i.fas.fa-shopping-cart.ml-1
+		hr
+		.row.d-flex.justify-content-center.wow.fadeIn(style="visibility: visible; animation-name: fadeIn;")
+			.col-md-6.text-center
+				h4.my-4.h4 Additional information
+				p
+					| Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
+					| voluptates,
+					| quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.
+		.row.wow.fadeIn(style="visibility: visible; animation-name: fadeIn;")
+			.col-lg-4.col-md-12.mb-4
+				img.img-fluid(src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" alt="")
+			.col-lg-4.col-md-6.mb-4
+				img.img-fluid(src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" alt="")
+			.col-lg-4.col-md-6.mb-4
+				img.img-fluid(src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" alt="")
+
+	// Footer
+	footer.page-footer.font-small.unique-color-dark.mt-5
+		div.unique-color-dark
+			.container.text-center.mb-4
+				.row
+					.col.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo co.
+						p Mirpur-1, Dhaka 1216, Bangladesh
+						i.fas.fa-phone
+							a.font-weight-light(href="tel:+8801758357036")  +8801758357036
+						br
+						i.fas.fa-envelope
+							a.font-weight-light(href="mailto:alkemy48@gmail.com")  info@tourgo.com
+					.col-md-3.text-center.text-md-left.mb-4
+						h5.mt-4 Tourgo
+						a(href="/user/hotel/hotels") Hotels
+						br
+						a(href="/user/package/packages") Packages
+						br
+						a(href="/user/blog") Blog
+						br
+						a(href="/user/contact") Contact
+
+					.col-md-3.text-center.text-md-left.mb-3
+						h5.mt-4 For Partner
+						a(href="/user/partnerTerms") Register with hotels
+						br
+						a(href="/user/partnerTerms") Register with services
+						br
+						a(href="/user/partnerTerms") Sell your packages
+
+		.footer-copyright.text-center.py-3
+			a Copyright © By Tourgo !{new Date().getFullYear()}

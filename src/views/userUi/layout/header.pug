@@ -1,0 +1,17 @@
+mixin header
+	head
+
+		meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+		meta(http-equiv="x-ua-compatible" content="ie=edge")
+		title #{title ? title + process.env.APP_NAME : process.env.APP_NAME}
+		link(href="/css/bootstrap.min.css" rel="stylesheet")
+		link(href="/css/mdb.min.css" rel="stylesheet")
+		link(href="/assets/theme/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css")
+		link(href="/css/messageUs.css" rel="stylesheet")
+		each script in __pageScript
+			each css in script.css
+				link(href=css rel='stylesheet')
+
+		script.
+			var notifications = !{JSON.stringify(notifications ? notifications : [])};
+
