@@ -3,4 +3,3 @@
 /.idea
 package-lock.json
 public/uploads
-src/server.ts
