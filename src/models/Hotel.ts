@@ -78,7 +78,6 @@ export class hotel {
 	@Property()
 	country: string;
 
-	@IgnoreProperty()
 	get AddressFull() {
 		return this.address + ",  " + this.city + " - " + this.postCode + ", " + this.country;
 	}

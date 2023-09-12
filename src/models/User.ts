@@ -58,7 +58,6 @@ export class User {
 	@Property()
 	gender: string;
 
-	@IgnoreProperty()
 	get fullName(){
 	return this.firstName+" " +this.lastName	;
 	}
